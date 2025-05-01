@@ -1,0 +1,26 @@
+{
+  "name": "product_image_creation_with_chatgpt",
+  "version": "1.0.0",
+  "description": "An app to generate images based off of prompts",
+  "homepage": "https://github.com/possomartin/images_with_prompts#readme",
+  "bugs": {
+    "url": "https://github.com/possomartin/images_with_prompts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/possomartin/images_with_prompts.git"
+  },
+  "license": "ISC",
+  "author": "Martin Posso",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tsx --env-file=.env ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
