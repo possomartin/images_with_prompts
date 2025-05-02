@@ -1,6 +1,6 @@
 import path from 'path';
 import { parentDir } from './lib/utils.js';
-import { inputs, inputs_with_prompts } from '@/consts.js';
+import { inputs, inputs_with_prompts, inputs_with_prompts_box } from '@/consts.js';
 import { generateImage, generateImageDescription } from "@/services/openai.js";
 
 /* CODE GOES HERE */
@@ -21,7 +21,7 @@ const imageDescriptions = () => {
 }
 
 const imagesGeneration = async () => {
-    for (const input of inputs_with_prompts)
+    for (const input of inputs_with_prompts_box)
     {
         const inputMapped = {...input, imageFiles: input.imageFiles.map((file) => (path.join(parentDir, `public/input_images/${file}`)))};
         try
