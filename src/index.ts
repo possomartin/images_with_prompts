@@ -1,40 +1,24 @@
 import path from 'path';
+import express from 'express';
+import bodyParser from 'body-parser';
+import indexRouter from './routes/indexRouter.js';
 import { parentDir } from './lib/utils.js';
-import { inputs, inputs_with_prompts } from '@/consts.js';
-import { generateImage, generateImageDescription } from "@/services/openai.js";
 
-/* CODE GOES HERE */
+const app = express();
+const port = process.env.PORT;
+const publicFolder = path.join(parentDir, 'public', 'uploads');
 
-const imageDescriptions = () => {
-    const product_descriptions = []
-    inputs.forEach(async (input, index) => {
-        const inputMapped = {...input, imageFiles: input.imageFiles.map((file) => (path.join(parentDir, `public/input_images/${file}`)))};
-        if (index == 4 || index == 8)
-        {
-            generateImageDescription(inputMapped).then((response) => {
-                console.log({name: input.name, description: response});
-            }).catch((error) => console.log(error)).finally(() => {
-                console.log(`Product ${index} of ${inputs.length}`);
-            });
-        }
-    });
-}
+/* path folder */
 
-const imagesGeneration = async () => {
-    for (const input of inputs_with_prompts)
-    {
-        const inputMapped = {...input, imageFiles: input.imageFiles.map((file) => (path.join(parentDir, `public/input_images/${file}`)))};
-        try
-        {
-            await generateImage(inputMapped);
-            console.log(`✅ Image created for ${input.name}`);
-        }
-        catch(error)
-        {
-            console.error(`❌ Error generating image for ${input.name}:`, error);
-        }
+app.use('/uploads', express.static(publicFolder))
 
-    } 
-}
+/* middlewares */
 
-await imagesGeneration();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
+app.use(indexRouter);
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
